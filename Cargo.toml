@@ -15,8 +15,9 @@ keywords = ["libzmq", "zmq", "zeromq"]
 members = ["testcrate"]
 
 [dependencies]
+cmake = "0.1"
 cc = { version = "1", features = ["parallel"] }
 dircpy = "0.3.8"
 
 [dev-dependencies]
-testcrate = { path = "./testcrate", features = ["libsodium"] }
+testcrate = { path = "./testcrate" }

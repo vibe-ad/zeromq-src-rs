@@ -4,11 +4,5 @@ version = "0.1.0"
 authors = ["jean-airoldie <maxence.caron@protonmail.com>"]
 edition = "2018"
 
-[features]
-libsodium = ['libsodium-sys-stable']
-
-[dependencies]
-libsodium-sys-stable = { version = "1.0", optional = true }
-
 [build-dependencies]
 zeromq-src = { path = ".." }

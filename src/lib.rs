@@ -33,8 +33,7 @@ impl Build {
             .configure_arg("-DBUILD_SHARED=0");
 
         match env::consts::ARCH {
-            "x86_64" => {
-                // should this be enabled for ARM?
+            "x86_64" | "aarch64" => {
                 builder.configure_arg("-DENABLE_INTRINSICS=1");
             }
             _ => (),

@@ -56,7 +56,10 @@ impl Build {
         let dst = builder.build();
 
         let install_dir = dst.clone();
-        let lib_dir = dst.join("lib64");
+        let lib_dir = match env::consts::OS {
+            "linux" => dst.join("lib64"),
+            _ => dst.join("lib"),
+        };
         let include_dir = dst.join("include");
 
         println!("cargo:rustc-link-lib=dylib=stdc++");

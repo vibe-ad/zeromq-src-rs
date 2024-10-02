@@ -62,7 +62,15 @@ impl Build {
         };
         let include_dir = dst.join("include");
 
-        println!("cargo:rustc-link-lib=dylib=stdc++");
+        match env::consts::OS {
+            // only linux and mac os tested.
+            "linux" => println!("cargo:rustc-link-lib=dylib=stdc++"),
+            "macos" | "ios" | "freebsd" => {
+                println!("cargo:rustc-link-lib=dylib=c++")
+            }
+            _ => println!("cargo:rustc-link-lib=dylib=stdc++"),
+        };
+
         println!("cargo:rustc-link-search=native={}", lib_dir.display());
         println!("cargo:rustc-link-lib=static=zmq");
         println!("cargo:include={}", include_dir.display());

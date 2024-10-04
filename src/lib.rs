@@ -1,4 +1,7 @@
-use std::{env, path::Path};
+use std::{
+    env,
+    path::{Path, PathBuf},
+};
 
 #[derive(Debug, Clone)]
 pub struct Build {}
@@ -14,6 +17,17 @@ impl Default for Build {
     fn default() -> Self {
         Self::new()
     }
+}
+
+fn find_lib_dir(install_dir: &PathBuf) -> Option<PathBuf> {
+    for lib in ["lib", "lib64"] {
+        let lib_dir = install_dir.join(lib);
+        if lib_dir.is_dir() {
+            return Some(lib_dir);
+        }
+    }
+
+    None
 }
 
 impl Build {
@@ -52,14 +66,12 @@ impl Build {
             _ => (),
         }
 
-        let dst = builder.build();
-
-        let install_dir = dst.clone();
-        let lib_dir = match env::consts::OS {
-            "linux" => dst.join("lib64"),
-            _ => dst.join("lib"),
+        let install_dir = builder.build();
+        let lib_dir = match find_lib_dir(&install_dir) {
+            Some(lib_dir) => lib_dir,
+            None => panic!("could not find lib dir"),
         };
-        let include_dir = dst.join("include");
+        let include_dir = install_dir.join("include");
 
         match env::consts::OS {
             // only linux and mac os tested.

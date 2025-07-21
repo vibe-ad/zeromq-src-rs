@@ -44,7 +44,8 @@ impl Build {
             .configure_arg("-DENABLE_DRAFTS=OFF")
             .configure_arg("-DBUILD_STATIC=1")
             .configure_arg("-DENABLE_RADIX_TREE=1")
-            .configure_arg("-DBUILD_SHARED=0");
+            .configure_arg("-DBUILD_SHARED=0")
+            .configure_arg("-DCMAKE_POLICY_VERSION_MINIMUM=3.5");
 
         match env::consts::ARCH {
             "x86_64" | "aarch64" => {

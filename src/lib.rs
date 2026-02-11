@@ -54,6 +54,11 @@ impl Build {
             _ => (),
         };
 
+        // Disable fork detection: Rust services never fork, and HAVE_FORK
+        // causes getpid() to be called on every signaler_t::send(), adding
+        // significant syscall overhead in I/O threads.
+        builder.configure_arg("-DHAVE_FORK=0");
+
         match env::consts::OS {
             "linux" => {
                 builder

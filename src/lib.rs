@@ -59,14 +59,21 @@ where
     Err(())
 }
 
-mod glibc {
+mod linux_like {
     use std::{
         env,
         path::{Path, PathBuf},
     };
 
+    /// Returns true if the target looks Linux-like
+    pub(crate) fn target_is_linux_like() -> bool {
+        static LINUX_LIKE_TARGET_ENVS: &[&str] = &["gnu", "uclibc"];
+        LINUX_LIKE_TARGET_ENVS
+            .contains(&env::var("CARGO_CFG_TARGET_ENV").unwrap().as_str())
+    }
+
     // Attempt to compile a c program that links to strlcpy from the std
-    // library to determine whether glibc packages it.
+    // library to determine whether libc packages it.
     pub(crate) fn has_strlcpy() -> bool {
         let src = Path::new(env!("CARGO_MANIFEST_DIR")).join("src/strlcpy.c");
         println!("cargo:rerun-if-changed={}", src.display());
@@ -499,9 +506,9 @@ impl Build {
         }
 
         // https://github.com/jean-airoldie/zeromq-src-rs/issues/28
-        if env::var("CARGO_CFG_TARGET_ENV").unwrap() == "gnu"
+        if linux_like::target_is_linux_like()
             && !has_strlcpy
-            && glibc::has_strlcpy()
+            && linux_like::has_strlcpy()
         {
             has_strlcpy = true;
         }

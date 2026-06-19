@@ -1,4 +1,4 @@
 [submodule "vendor"]
 	path = vendor
-	url = https://github.com/zeromq/libzmq
-    branch = v4.3.5
+	url = https://github.com/vibe-ad/libzmq
+	branch = ts/feat/tcp-max-pacing-rate

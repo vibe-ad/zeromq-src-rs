@@ -41,7 +41,7 @@ impl Build {
         builder
             .configure_arg("-DZMQ_BUILD_TESTS=OFF")
             .configure_arg("-DENABLE_WS=OFF")
-            .configure_arg("-DENABLE_DRAFTS=OFF")
+            .configure_arg("-DENABLE_DRAFTS=ON")
             .configure_arg("-DBUILD_STATIC=1")
             .configure_arg("-DENABLE_RADIX_TREE=1")
             .configure_arg("-DBUILD_SHARED=0")

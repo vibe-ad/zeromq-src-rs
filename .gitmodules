@@ -1,4 +1,4 @@
 [submodule "vendor"]
 	path = vendor
 	url = https://github.com/vibe-ad/libzmq
-	branch = ts/feat/tcp-max-pacing-rate
+	branch = vibe/fork
